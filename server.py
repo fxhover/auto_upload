@@ -33,7 +33,7 @@ class MyServer(SocketServer.BaseRequestHandler):
                     #print 'data:', data 
                     if not data['file']:
                         self.request.sendall('file empty, break')
-                        continue
+                        break
                     filename = os.path.join(PATH, data['file'])
                     if data['type'] == 'created':
                         if data['is_dir']:
@@ -67,7 +67,7 @@ class MyServer(SocketServer.BaseRequestHandler):
                 sys.exit(0)
             except Exception, e:
                 print 'server exception: %s' % str(e)
-        
+                break 
         self.request.close()  
 
         '''   
