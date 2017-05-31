@@ -18,6 +18,7 @@ import sys
 reload(sys) 
 sys.setdefaultencoding('utf-8')
 import os, socket 
+import struct
 from optparse import OptionParser
 from watchdog.observers import Observer  
 from watchdog.events import PatternMatchingEventHandler #,  RegexMatchingEventHandler, FileSystemEventHandler
@@ -38,10 +39,8 @@ class MyClient:
     def connect(self):   
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
         self.sock.connect((self.server_host, self.server_port))   
-        self.sock.sendall('Hi, server')
-        reponse = self.sock.recv(8192)
-        if reponse == 'hi, client':
-            print 'connect success.'
+        self.transfer('Hi, server')
+
         '''
         sock.sendall('Hi, server')   
         self.response = sock.recv(8192)   
@@ -86,8 +85,10 @@ class MyClient:
         print 'Disconnected'  
         ''' 
     def transfer(self, data):
-        self.sock.sendall(data)
-        print 'server reponse: ', self.sock.recv(8192)
+        msg = struct.pack('>I', len(data)) + data
+        self.sock.sendall(msg)
+        response = self.sock.recv(8192)
+        print 'server reponse: ', response
 
     def close(self):
         self.sock.close()
