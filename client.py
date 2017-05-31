@@ -15,6 +15,8 @@ memory.
 """
 import time  
 import sys 
+reload(sys) 
+sys.setdefaultencoding('utf-8')
 import os, socket 
 from optparse import OptionParser
 from watchdog.observers import Observer  
