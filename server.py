@@ -56,6 +56,8 @@ class MyServer(SocketServer.BaseRequestHandler):
                     if not data['file']:
                         self.request.sendall('file empty, break')
                         break
+                    if data['file'][0] == '/':
+                        data['file'] = data['file'][1:]
                     filename = os.path.join(PATH, data['file'])
                     if data['type'] == 'created':
                         if data['is_dir']:
