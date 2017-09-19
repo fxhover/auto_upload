@@ -77,10 +77,11 @@ class MyServer(SocketServer.BaseRequestHandler):
                                 f.write(data['content'])
                             self.request.sendall("file %s writed." % data['file'])
                     elif data['type'] == 'deleted': 
-                        if data['is_dir']:
-                            os.rmdir(filename)
-                        else:
-                            os.remove(filename)
+                        if os.path.exists(filename):
+                            if data['is_dir']:
+                                os.rmdir(filename)
+                            else:
+                                os.remove(filename)
                         self.request.sendall("file %s deleted." % data['file'])
                     elif data['type'] == 'moved':
                         os.rename(data['file'], data['new_file'])
