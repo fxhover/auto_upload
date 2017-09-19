@@ -91,7 +91,7 @@ class MyServer(SocketServer.BaseRequestHandler):
             except KeyboardInterrupt:
                 sys.exit(0)
             except Exception, e:
-                print 'server exception: %s' % str(backtrace.format_exc())
+                print 'server exception: %s' % str(traceback.format_exc())
                 break 
         self.request.close()  
 
