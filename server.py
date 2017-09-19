@@ -11,6 +11,7 @@ import SocketServer, time
 import os
 import sys
 import struct
+import traceback
 reload(sys) 
 sys.setdefaultencoding('utf-8')
 try:
@@ -90,7 +91,7 @@ class MyServer(SocketServer.BaseRequestHandler):
             except KeyboardInterrupt:
                 sys.exit(0)
             except Exception, e:
-                print 'server exception: %s' % str(e)
+                print 'server exception: %s' % str(backtrace.format_exc())
                 break 
         self.request.close()  
 
